@@ -51,7 +51,7 @@ var app = {
 
     },
     setBadges: function(num) {
-        pushNotification.Karla(num);
+        pushNotification.setApplicationIconBadgeNumber(num);
         badgesNumber = num;
     },
     receiveStatus: function() {
