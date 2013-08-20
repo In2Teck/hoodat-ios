@@ -48,7 +48,6 @@ var app = {
         pushNotification.getApplicationIconBadgeNumber(function(badgeNumber) {
                                                        badgesNumber = badgeNumber;
                                                        });
-
     },
     setBadges: function(num) {
         pushNotification.setApplicationIconBadgeNumber(num);
