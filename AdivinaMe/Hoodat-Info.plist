@@ -26,7 +26,7 @@
 		</dict>
 	</dict>
 	<key>CFBundleIdentifier</key>
-	<string>org.apache.cordova.TwistFront</string>
+	<string>com.in2teck.hoodat</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
@@ -54,6 +54,11 @@
 	<string></string>
 	<key>NSMainNibFile~ipad</key>
 	<string></string>
+	<key>Plugins</key>
+	<dict>
+		<key>PushNotification</key>
+		<string>PushNotification</string>
+	</dict>
 	<key>UIStatusBarHidden</key>
 	<true/>
 	<key>UISupportedInterfaceOrientations</key>
@@ -66,10 +71,5 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
-	<key>Plugins</key>
-	<dict>
-		<key>PushNotification</key>
-		<string>PushNotification</string>
-	</dict>
 </dict>
 </plist>
