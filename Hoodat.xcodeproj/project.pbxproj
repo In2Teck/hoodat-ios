@@ -174,7 +174,7 @@
 		5B1594DC16A7569C00FEF299 /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
 		8D1107310486CEB800E47090 /* Hoodat-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "Hoodat-Info.plist"; path = "../Hoodat-Info.plist"; plistStructureDefinitionIdentifier = "com.apple.xcode.plist.structure-definition.iphone.info-plist"; sourceTree = "<group>"; };
 		D4A0D8751607E02300AEF8BB /* Default-568h@2x~iphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x~iphone.png"; sourceTree = "<group>"; };
-		F840E1F0165FE0F500CFE078 /* config.xml */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = config.xml; path = AdivinaMe/config.xml; sourceTree = "<group>"; };
+		F840E1F0165FE0F500CFE078 /* config.xml */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = config.xml; path = Hoodat/config.xml; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -222,7 +222,7 @@
 				0D5E1D3B17BE2F3500C58E3B /* AppDelegate.m */,
 			);
 			name = Classes;
-			path = AdivinaMe/Classes;
+			path = Hoodat/Classes;
 			sourceTree = SOURCE_ROOT;
 		};
 		0D012C7317BE3477004D77AA /* PushNotification */ = {
@@ -344,7 +344,7 @@
 				29B97316FDCFA39411CA2CEA /* main.m */,
 			);
 			name = "Other Sources";
-			path = AdivinaMe;
+			path = Hoodat;
 			sourceTree = "<group>";
 		};
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
@@ -360,7 +360,7 @@
 				8D1107310486CEB800E47090 /* Hoodat-Info.plist */,
 			);
 			name = Resources;
-			path = AdivinaMe/Resources;
+			path = Hoodat/Resources;
 			sourceTree = "<group>";
 		};
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
@@ -406,7 +406,7 @@
 				0D047EFF17B41E06005A12D6 /* ios */,
 			);
 			name = Plugins;
-			path = AdivinaMe/Plugins;
+			path = Hoodat/Plugins;
 			sourceTree = SOURCE_ROOT;
 		};
 		308D052D1370CCF300D202BF /* icons */ = {
@@ -468,7 +468,7 @@
 				301BF551109A68C00062928A /* PBXTargetDependency */,
 			);
 			name = Hoodat;
-			productName = AdivinaMe;
+			productName = Hoodat;
 			productReference = 1D6058910D05DD3D006BFB54 /* Hoodat.app */;
 			productType = "com.apple.product-type.application";
 		};
@@ -630,6 +630,8 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ENABLE_OBJC_ARC = NO;
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Jorge Benjamin Hernandez Zetter (U7443L5ZBL)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Jorge Benjamin Hernandez Zetter (U7443L5ZBL)";
 				COPY_PHASE_STRIP = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -639,12 +641,14 @@
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "AdivinaMe/Hoodat-Prefix.pch";
+				GCC_PREFIX_HEADER = "Hoodat/Hoodat-Prefix.pch";
 				GCC_THUMB_SUPPORT = NO;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
-				INFOPLIST_FILE = "AdivinaMe/Hoodat-Info.plist";
+				INFOPLIST_FILE = "Hoodat/Hoodat-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				PRODUCT_NAME = Hoodat;
+				PROVISIONING_PROFILE = "EE867C79-9454-4F8A-B2BE-0CC4925B0BF8";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "EE867C79-9454-4F8A-B2BE-0CC4925B0BF8";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -654,6 +658,8 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ENABLE_OBJC_ARC = NO;
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Jorge Benjamin Hernandez Zetter (U7443L5ZBL)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Jorge Benjamin Hernandez Zetter (U7443L5ZBL)";
 				COPY_PHASE_STRIP = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -661,12 +667,14 @@
 					"\"$(SRCROOT)\"",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "AdivinaMe/Hoodat-Prefix.pch";
+				GCC_PREFIX_HEADER = "Hoodat/Hoodat-Prefix.pch";
 				GCC_THUMB_SUPPORT = NO;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
-				INFOPLIST_FILE = "AdivinaMe/Hoodat-Info.plist";
+				INFOPLIST_FILE = "Hoodat/Hoodat-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				PRODUCT_NAME = Hoodat;
+				PROVISIONING_PROFILE = "EE867C79-9454-4F8A-B2BE-0CC4925B0BF8";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "EE867C79-9454-4F8A-B2BE-0CC4925B0BF8";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
@@ -708,8 +716,8 @@
 					"-ObjC",
 					"-lsqlite3.0",
 				);
-				PROVISIONING_PROFILE = "A41C53A1-0ACE-44FD-9BDC-EA68745C3101";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "A41C53A1-0ACE-44FD-9BDC-EA68745C3101";
+				PROVISIONING_PROFILE = "EE867C79-9454-4F8A-B2BE-0CC4925B0BF8";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "EE867C79-9454-4F8A-B2BE-0CC4925B0BF8";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = NO;
 				USER_HEADER_SEARCH_PATHS = "";
@@ -753,8 +761,8 @@
 					"-ObjC",
 					"-lsqlite3.0",
 				);
-				PROVISIONING_PROFILE = "A41C53A1-0ACE-44FD-9BDC-EA68745C3101";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "A41C53A1-0ACE-44FD-9BDC-EA68745C3101";
+				PROVISIONING_PROFILE = "EE867C79-9454-4F8A-B2BE-0CC4925B0BF8";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "EE867C79-9454-4F8A-B2BE-0CC4925B0BF8";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = NO;
 				USER_HEADER_SEARCH_PATHS = "";

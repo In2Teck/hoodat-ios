@@ -129,7 +129,7 @@ function invocarServicio(tipo, params, funcionSuccess, funcionError) {
 			break;
 	}
 	
-	// navigator.notification.alert('url: ' + url + ', params: ' + JSON.stringify(params), null, 'AdivinaMe');
+	// navigator.notification.alert('url: ' + url + ', params: ' + JSON.stringify(params), null, 'Hoodat');
 	if (paramsCompletos) {
 		if (funcionSuccess === undefined) {
 			funcionSuccess = function(response, textStatus, jqXHR) {

@@ -217,7 +217,7 @@ FB.Event.subscribe(
 									app.registerWithFacebook();
 								},
 								function(jqXHR, textStatus, errorThrown) {
-									alert('No pudimos conectarnos con el servidor de Adivina-Me, vuelve a intentarlo mas tarde.');
+									alert('No pudimos conectarnos con el servidor de Hoodat, vuelve a intentarlo mas tarde.');
 									mostrarConectar();
 								});
 						});
@@ -517,7 +517,7 @@ function alert(texto, tipo, acciones) {
         $('.alerta[tipo="' + tipo + '"]').show();
     });
 	
-	// navigator.notification.alert(texto, null, 'AdivinaMe'); // Alert original
+	// navigator.notification.alert(texto, null, 'Hoodat'); // Alert original
 }
 
 function cerrarAlert() {
@@ -607,10 +607,10 @@ function enviarPostFB(facebook_id, funcionSuccess) {
 		FB.ui({
 			method: 'feed',
 			to: facebook_id,
-			link: 'http://apps.facebook.com/Adivina_Me/',
+			link: 'http://apps.facebook.com/hoodat-mx/',
 			picture: 'http://fbrell.com/f8.jpg',
-			name: 'Adivina-Me',
-			caption: '¡Te desafío en Adivina-Me!',
+			name: 'Hoodat',
+			caption: '¡Te desafío en Hoodat!',
 			description: 'Adivina el personaje que elegí en menos intentos que yo.'
         },
         function(response) {
