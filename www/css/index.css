@@ -557,27 +557,39 @@ body:after {
 	text-align: left;
 }
 
+.estado .titulo {
+	position: absolute;
+	display: block;
+	
+	top: 12%;
+	left: 5%;
+	
+	font-family: gotham-bold;
+	font-size: 120%;
+	text-transform: uppercase;
+}
+
 .estado .mensaje {
 	position: absolute;
 	display: block;
 	
-	top: 30%;
+	top: 37%;
 	left: 5%;
+	width: 90%;
 	
 	font-family: gotham-bold;
-	font-size: 110%;
-	text-transform: uppercase;
+	font-size: 90%;
 }
 
 .estado .actualizacion {
 	position: absolute;
 	display: block;
 	
-	top: 60%;
+	top: 78%;
 	left: 5%;
 	
 	font-family: gotham-bold;
-	font-size: 90%;
+	font-size: 80%;
 }
 
 .estado .botones {

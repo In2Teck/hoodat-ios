@@ -51,7 +51,7 @@
 		var estatus = juego.board.status;
 		var estatusAnterior = 3;
 		var visible = true;
-		console.log('Estatus : ' + estatus);
+		console.log('Estatus actual : ' + estatus);
 		if (juego.board.status == ESTATUS_NUEVO
 				|| juego.board.status == ESTATUS_TURNO) {
 			if (juego.board.last_action == usuario.id) {
@@ -59,14 +59,14 @@
 			} else {
 				estatus = ESTATUS_TU_TURNO;
 			}
-			console.log('Anterior : ' + juego.previous_result);
-			if (juego.previous_result != undefined) {
-				estatusAnterior = juego.previous_result;
-			}
 		} else if (juego.board.status == ESTATUS_ABANDONO) {
 			if (juego.board.last_action == usuario.id) {
 				visible = false;
 			}
+		}
+		if (juego.previous_result != undefined) {
+			estatusAnterior = juego.previous_result;
+			console.log('Anterior anterior : ' + juego.previous_result);
 		}
 		
 		if (visible) {
@@ -75,45 +75,48 @@
 			
 			switch(estatus) {
 				case ESTATUS_TU_TURNO:
+					$div.find('.titulo').html('¡Es tu turno!');
 					if (estatusAnterior == 3) {
-						$div.find('.mensaje').html('¡Es tu turno!');
 						$div.find('.estado').addClass('tu_turno');
 					} else if (estatusAnterior == 2) {
-						$div.find('.mensaje').html('Abandonó');
+						$div.find('.mensaje').html('Abandonó la partida.');
 						$div.find('.estado').addClass('abandono');
 					} else if (estatusAnterior == 1) {
-						$div.find('.mensaje').html('¡Perdiste!');
+						$div.find('.mensaje').html('Perdiste la partida.');
 						$div.find('.estado').addClass('su_turno');
 					} else if (estatusAnterior == 0) {
-						$div.find('.mensaje').html('¡Ganaste!');
+						$div.find('.mensaje').html('Ganaste la partida.');
 						$div.find('.estado').addClass('tu_turno');
 					}
 					break;
 				case ESTATUS_SU_TURNO:
+					$div.find('.titulo').html('Esperando turno...');
 					if (estatusAnterior == 3) {
-						$div.find('.mensaje').html('Esperando...');
 						$div.find('.estado').addClass('su_turno');
 					} else if (estatusAnterior == 2) {
-						$div.find('.mensaje').html('Abandonó');
+						$div.find('.mensaje').html('Abandonó la partida.');
 						$div.find('.estado').addClass('abandono');
 					} else if (estatusAnterior == 1) {
-						$div.find('.mensaje').html('¡Perdiste!');
+						$div.find('.mensaje').html('Perdiste la partida.');
 						$div.find('.estado').addClass('su_turno');
 					} else if (estatusAnterior == 0) {
-						$div.find('.mensaje').html('¡Ganaste!');
+						$div.find('.mensaje').html('Ganaste la partida.');
 						$div.find('.estado').addClass('tu_turno');
 					}
 					break;
 				case ESTATUS_ABANDONO:
-					$div.find('.mensaje').html('Abandonó');
+					$div.find('.titulo').html('Abandonó');
+					$div.find('.mensaje').html('Abandonó la partida.');
 					$div.find('.estado').addClass('abandono');
 					break;
 				case ESTATUS_FINALIZO:
 					if (juego.board.winner_id == usuario.id) {
-						$div.find('.mensaje').html('¡Ganaste!');
+						$div.find('.titulo').html('¡Ganaste!');
+						$div.find('.mensaje').html('Ganaste la partida.');
 						$div.find('.estado').addClass('tu_turno');
 					} else {
-						$div.find('.mensaje').html('¡Perdiste!');
+						$div.find('.titulo').html('¡Perdiste!');
+						$div.find('.mensaje').html('Perdiste la partida.');
 						$div.find('.estado').addClass('su_turno');
 					}
 					break;
