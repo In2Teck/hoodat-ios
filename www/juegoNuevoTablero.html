@@ -3,9 +3,6 @@
 	$('#loading').show();
 	
     var posicionSeleccionada = null;
-        
-    // Obtenemos el tipo de tablero que se debe generar
-    var tipoTablero = TIPO_CARTA_AMIGO;
     
 	// Cambio de imágenes para botones.
     $('#btn_tablero_continuar').bind('touchstart',function() { presionarBoton($(this)); });
@@ -20,18 +17,7 @@
     }, 1000);
         
     function getTablero() {
-    	if (getCache('amigos').length >= 20) {
-    		seleccionarTablero(TIPO_CARTA_AMIGO);
-    	} else {
-    		$('#btn_tablero_amigos').hide();
-    		seleccionarTablero(TIPO_CARTA_PERSONAJE);
-    	}
-    }
-    
-    function seleccionarTablero(tipo) {
-    	tipoTablero = tipo;
-        generarTablero();
-        actualizarBotones();
+    	generarTablero();
     }
     
     function generarTablero() {
@@ -41,20 +27,7 @@
     	
         // Arreglo que contiene las 20 cartas que conformarán el tablero
         var tablero = new Array();
-        switch(tipoTablero) {
-            case TIPO_CARTA_PERSONAJE:
-                cartas = getCache('personajes');
-            	break;
-            case TIPO_CARTA_FAMOSO:
-            	cartas = getCache('famosos');
-            	break;
-            case TIPO_CARTA_AMIGO:
-            	cartas = getCache('amigos');
-            	break;
-            default:
-            	break;
-        }
-                
+        cartas = getCache('personajes');        
         cartas.sort( function() { return 0.5 - Math.random() } );
         for (var i=0; i <20; i++) {
             tablero.push(cartas[i]);
@@ -73,23 +46,6 @@
         $('#loading').hide();
     }
     
-    function actualizarBotones() {
-    	$('#btn_tablero_personajes').attr('src', 'img/nu_btn_personajes.png');
-    	$('#btn_tablero_amigos').attr('src', 'img/nu_btn_amigos.png');
-    	$('#btn_tablero_famosos').attr('src', 'img/nu_btn_famosos.png');
-    	switch(tipoTablero) {
-    		case TIPO_CARTA_PERSONAJE:
-    			$('#btn_tablero_personajes').attr('src', 'img/nu_btn_personajes_over.png');
-    			break;
-    		case TIPO_CARTA_AMIGO:
-    			$('#btn_tablero_amigos').attr('src', 'img/nu_btn_amigos_over.png');
-    			break;
-    		case TIPO_CARTA_FAMOSO:
-    			$('#btn_tablero_famosos').attr('src', 'img/nu_btn_famosos_over.png');
-    			break;
-    	}
-    }
-    
     // Seleccionamos el personaje
     function seleccionarPersonaje(posicion) {
         if (posicionSeleccionada != null) {
@@ -102,35 +58,23 @@
         $('#mnu_carta').addClass('marco_carta');
         $('#mnu_carta').html('<div id="carta_seleccionada" class="carta"></div>');
         $('#carta_seleccionada').html($('.cartaTablero[posicion="' + posicion + '"]').html());
-    }
-    
-    function validarPartida() {
-        // Aquí va la lógica que crea la partida en el backend
-        if (posicionSeleccionada != null) {
-			enviarPostFB('' + getCache('nuevo_oponente').id, function(response) {
-				$('#loading').show();
-				crearPartida();
-			});
-        } else {
-            alert('Debes seleccionar tu carta para continuar.');
-        }
+        
+		enviarPostFB('' + getCache('nuevo_oponente').id, function(response) {
+			$('#loading').show();
+			crearPartida();
+		});
     }
     
     function crearPartida() {
     	var facebook_id = null;
-    	var card_id = null;
-    	if (parseInt($('.cartaTablero[posicion="' + posicionSeleccionada + '"]').attr('tipo')) == TIPO_CARTA_AMIGO) {
-    		facebook_id = $('.cartaTablero[posicion="' + posicionSeleccionada + '"]').attr('id');
-    	} else {
-    		card_id = $('.cartaTablero[posicion="' + posicionSeleccionada + '"]').attr('id');
-    	}
+    	var card_id = $('.cartaTablero[posicion="' + posicionSeleccionada + '"]').attr('id');
     	var params = {
 			user_id : getCache('usuario').id,
 			detail_xml : crearXML(),
 			card_id : card_id,
 			card_facebook_id : facebook_id,
 			card_name : $('.cartaTablero[posicion="' + posicionSeleccionada + '"]').find('.nombre').attr('nombre'),
-			card_type : $('.cartaTablero[posicion="' + posicionSeleccionada + '"]').attr('tipo'),
+			card_type : '2',
 			opponent_id : getCache('nuevo_oponente').id,
 			opponent_name : getCache('nuevo_oponente').nombre
 		};
@@ -158,7 +102,7 @@
     	
     	var xml = '<?xml version="1.0"?>';
     	xml += '<partida jugador1="' + jugador1 + '" jugador2="' + jugador2 + '">';
-    	xml += '<tablero tipo="' + tipoTablero + '">';
+    	xml += '<tablero >';
     	$('#cuadro_negro .carta').each(
     		function() {
     			xml += '<carta posicion="' + $(this).attr('posicion') + '" id="' + $(this).attr('id') + '" ruta="' + encodeURIComponent($(this).find('img.thumb').attr('src')) + '" nombre="' + $(this).find('span.nombre').html() + '">';
@@ -182,12 +126,6 @@
 		<div id="menu">
             <div id="mnu_carta"></div>
             <div id="mnu_botones">
-            	<div class="mnu_botones_small">
-					<img id="btn_tablero_personajes" src="img/nu_btn_personajes.png" onclick="seleccionarTablero(TIPO_CARTA_PERSONAJE);" />
-    	            <img id="btn_tablero_amigos" src="img/nu_btn_amigos.png" onclick="seleccionarTablero(TIPO_CARTA_AMIGO);" />
-	                <img id="btn_tablero_famosos" src="img/nu_btn_famosos.png" onclick="seleccionarTablero(TIPO_CARTA_FAMOSO);" />
-                </div>
-                <img id="btn_tablero_continuar" src="img/btn_continuar.png" onclick="validarPartida();" />
                 <img id="btn_tablero_salir" src="img/btn_regresar.png" onclick="inicio();" />
 			</div>
 		</div>

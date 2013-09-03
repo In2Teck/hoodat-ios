@@ -2,15 +2,9 @@
 	// Javascript que se ejecute al iniciar la página.
 	$('#loading').show();
 	
-    var mostrandoSC = false;
-	var filtroJugando = false;
 	var amigosJugando = 0;
-    var posicionSeleccionada = null;
     
     // Cambio de imágenes para botones.
-	$('#btn_continuar').bind('touchstart',function() { presionarBoton($(this)); });
-    $('#btn_continuar').bind('touchend',function() { soltarBoton($(this)); });
-    
     $('#btn_salir').bind('touchstart',function() { presionarBoton($(this)); });
     $('#btn_salir').bind('touchend',function() { soltarBoton($(this)); });
     
@@ -21,7 +15,7 @@
     // funciones para inicializar la lista de oponentes
     function crearOponentes() {
 		FB.api('fql',
-			{ q : "SELECT uid, name, first_name FROM user WHERE uid IN (SELECT uid2 FROM friend WHERE uid1 = me()) ORDER BY first_name asc"},
+			{ q : "SELECT uid, name, first_name FROM user WHERE uid IN (SELECT uid2 FROM friend WHERE uid1 = me()) ORDER BY name asc"},
 			function(response) {
 				if (response.data !== undefined) {
 					var amigos = response.data;
@@ -54,17 +48,15 @@
 								}
 								amigosObj.push({
 									id : amigos[i].uid,
-									description : amigos[i].first_name,
-									url : "http://graph.facebook.com/" + amigos[i].uid + "/picture?width=250&height=250",
+									description : amigos[i].name,
+									url : "http://graph.facebook.com/" + amigos[i].uid + "/picture?width=50&height=50",
 									template_id : TIPO_CARTA_AMIGO,
 									jugando : jugando
 								});
 							}
 							setCache('amigos', amigosObj);
-							$('.derecha').html(getGridOponentes());
-							loaderCartas();
+							$('#nuevaPartida').append(getGridOponentes());
 							$('#loading').hide();
-							mostrarShortcut('A');
 						});
 				} else {
 					alert("No se pudo obtener la lista de tus amigos. Por favor intenta hacer un evento nuevamente.");
@@ -74,6 +66,7 @@
 		);
 	}
 	
+	// Se envia una lista de amigos y regresa si el id se encuentra en la lista de amigos
 	function estaJugando(amigos, id) {
 		for (var i = 0; i < amigos.length; i++) {
 			if (amigos[i].facebook_id == id) {
@@ -83,131 +76,120 @@
 		return false;
 	}
 	
+	// Se obtiene el HTML del amigo
+	function obtieneAmigo(amigo, posicion, clases) {
+		return '<div id="' + amigo.id + '" class="' + clases + '" posicion="' + posicion + '" onclick="seleccionarOponente(\'' + posicion + '\')"><img id="thumb_' + posicion + '" id_loader="thumb_loading_' + posicion + '" class="thumb" src="' + amigo.url + '"/><span class="nombre" nombre="' + amigo.description + '">' + limitaTexto(amigo.description, 40) + '</span></div></div>';
+	}
+	
+	// Se obtiene el grid de oponentes
 	function getGridOponentes() {
-		var html = $('<div id="cuadro_negro">');
+		var html = $('<div id="cuadro_amigos">');
 		var amigos = getCache('amigos');
 		
-		var primeraLetra = '';
+		var letraPos = 0;
+		var letras = ['0','A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z','#'];
 		for (var i = 0; i < amigos.length; i++) {
-			if (amigos[i].description.charAt(0).toUpperCase() != primeraLetra) {
-				primeraLetra = amigos[i].description.charAt(0).toUpperCase();
-				html.append('<div id="letra_' + primeraLetra + '" class="carta cartaTablero cartaShortcut" onclick="mostrarShortcut(\'letra_' + primeraLetra + '\');"><span class="letra">' + primeraLetra + '</span></div>');
+			if (amigos[i].description.charAt(0).toUpperCase() != letras[letraPos]) {
+				letraPos++;
+				for (; letraPos < letras.length; letraPos++) {
+					html.append('<div id="letra_' + letras[letraPos] + '" class="division"><span class="letra">' + letras[letraPos] + '</span></div>');
+					if (amigos[i].description.charAt(0).toUpperCase() == letras[letraPos]) {
+						break;
+					}
+				}
 			}
-			var clase = "cartaOponente";
+			var clase = "amigo";
 			if (amigos[i].jugando) {
-				clase += " oponenteJugando";
-				html.find('.cartaShortcut:last').addClass('shortcutJugando');
+				clase += " jugando";
 			}
-			html.append(obtieneCarta(amigos[i], i, 'seleccionarOponente(' + i + ')', clase));
+			html.append(obtieneAmigo(amigos[i], i, clase));
+		}
+		for (; letraPos < letras.length; letraPos++) {
+			html.append('<div id="letra_' + letras[letraPos] + '" class="division"><span class="letra">' + letras[letraPos] + '</span></div>');
 		}
 		
 		return html;
 	}
 	
-	// Funciones que ayudan a filtrar la lista y los shortcuts a las letras.
-	function filtrar(tipo) {
-    	switch(tipo) {
-    		case 'jugando':
-    			if (amigosJugando == 0) {
-    				alert('Ya tienes partidas con todos los amigos que están jugando. Invita a alguien más a utilizar la aplicación.');
-    			} else {
-					mostrandoSC = false;
-					filtroJugando = true;
-					$('.cartaShortcut').hide();
-					$('.cartaOponente').hide();
-					$('.shortcutJugando').show();
-					$('.oponenteJugando').show();
-					actualizarBotones(tipo);
-    			}
-    			break;
-    		case 'todos':
-    		default:
-    			mostrandoSC = false;
-    			filtroJugando = false;
-    			$('.cartaShortcut').show();
-    			$('.cartaOponente').show();
-    			actualizarBotones(tipo);
-    			break;
+	// Se filtran los amigos de acuerdo al input de la búsqueda
+	function filtrar() {
+    	texto = $('#busqueda').val().toLowerCase();
+    	amigos = $('.amigo');
+    	amigos.hide();
+    	for (var i = 0; i < amigos.length; i++) {
+    		nombreCompleto = limpiaCaracteres($(amigos[i]).find('.nombre').attr('nombre'));
+			if (nombreCompleto.indexOf(texto) >= 0) {
+				$(amigos[i]).show();
+			} else {
+				$(amigos[i]).hide();
+			}
     	}
+    	$('#cuadro_amigos').scrollTop(0);
     }
     
-    function mostrarShortcut(idLetra) {
-		mostrandoSC = !mostrandoSC;
-		if (mostrandoSC) {
-			$('.cartaOponente').hide();
-			$('#' + idLetra).parent().scrollTop(0);
-		} else {
-			if (filtroJugando) {
-				$('.oponenteJugando').show();
-			} else {
-				$('.cartaOponente').show();
-			}
-			recorrerShortcut(idLetra);
-		}
-	}
+    // Se borran los filtros y se muestran todos los amigos
+    function borrarFiltro() {
+    	$('#busqueda').val('');
+    	$('.amigo').show();
+    	$('#cuadro_amigos').scrollTop(0);
+    }
 	
+	// Se recorren los amigos para mostrar la letra indicada.
 	function recorrerShortcut(idLetra) {
-		$('#' + idLetra).parent().scrollTop($('#' + idLetra).position().top);
+		$('#letra_' + idLetra).parent().scrollTop(0);
+		$('#letra_' + idLetra).parent().scrollTop($('#letra_' + idLetra).position().top);
 	}
 	
 	// Funciones para seleccionar el oponente.
     function seleccionarOponente(posicion) {
-        if (posicionSeleccionada != null) {
-        	$('.cartaTablero[posicion="' + posicionSeleccionada + '"]').removeClass('cartaSeleccionada');
-        }
-        $('.cartaTablero[posicion="' + posicion + '"]').addClass('cartaSeleccionada');
-        
-        posicionSeleccionada = posicion;
-        
-        $('#mnu_carta').addClass('marco_carta');
-        $('#mnu_carta').html('<div id="carta_seleccionada" class="carta"></div>');
-        $('#carta_seleccionada').html($('.cartaTablero[posicion="' + posicion + '"]').html());
-    }
-    
-    function continuar() {
-        if (posicionSeleccionada != null) {
-        	$('#loading').show();
-        	var oponente = {
-        		id : $('.carta[posicion="' + posicionSeleccionada + '"]').attr('id'),
-        		nombre : $('.carta[posicion="' + posicionSeleccionada + '"]').find('.nombre').attr('nombre')
-        	};
-        	setCache('nuevo_oponente', oponente);
-            abrirTemplate('juegoNuevoTablero.html');
-        } else {
-            alert('Debes seleccionar tu oponente para continuar.');
-        }
-    }
-    
-    function actualizarBotones(tipo) {
-    	$('#btn_amigos_fb').attr('src', 'img/nu_amigos_fb.png');
-    	$('#btn_amigos_jugando').attr('src', 'img/nu_amigos_jugando.png');
-    	switch(tipo) {
-    		case 'jugando':
-    			$('#btn_amigos_jugando').attr('src', 'img/nu_amigos_jugando_over.png');
-    			break;
-    		case 'todos':
-    		default:
-    			$('#btn_amigos_fb').attr('src', 'img/nu_amigos_fb_over.png');
-    			break;
-    	}
+		$('#loading').show();
+		var oponente = {
+			id : $('.amigo[posicion="' + posicion + '"]').attr('id'),
+			nombre : $('.amigo[posicion="' + posicion + '"]').find('.nombre').attr('nombre')
+		};
+		setCache('nuevo_oponente', oponente);
+		abrirTemplate('juegoNuevoTablero.html');
     }
 </script>
 <div id="nuevaPartida">
-	<div class="izquierda">
-		<div id="menu">
-			<div id="mnu_carta"><img class="instruccion" src="img/nu_selecciona_oponente.png"/></div>
-			<div id="mnu_botones">
-				<div class="mnu_botones_small">
-					<img id="btn_amigos_fb" src="img/nu_amigos_fb_over.png" onclick="filtrar('todos');" />
-    	            <img id="btn_amigos_jugando" src="img/nu_amigos_jugando.png" onclick="filtrar('jugando');" />
-                </div>
-				<img id="btn_continuar" src="img/btn_continuar.png" onclick="continuar()" />
-                <img id="btn_salir" src="img/btn_regresar.png" onclick="inicio()" />
-			</div>
-		</div>
+	<div class="instruccion">
+		Selecciona tu oponente
 	</div>
-	<div class="derecha">
-		<div id="cuadro_negro">
-		</div>
+	<div class="buscador">
+		<input type="text" id="busqueda" name="busqueda" onkeypress="filtrar()"/>
+		<div class="btn_buscar" onclick="filtrar()">Buscar</div>
+		<div class="btn_cancelar" onclick="borrarFiltro()">Cancelar</div>
+	</div>
+	<div class="shortcuts">
+		<div class="letra" onclick="recorrerShortcut('A')">A</div>
+		<div class="letra" onclick="recorrerShortcut('B')">B</div>
+		<div class="letra" onclick="recorrerShortcut('C')">C</div>
+		<div class="letra" onclick="recorrerShortcut('D')">D</div>
+		<div class="letra" onclick="recorrerShortcut('E')">E</div>
+		<div class="letra" onclick="recorrerShortcut('F')">F</div>
+		<div class="letra" onclick="recorrerShortcut('G')">G</div>
+		<div class="letra" onclick="recorrerShortcut('H')">H</div>
+		<div class="letra" onclick="recorrerShortcut('I')">I</div>
+		<div class="letra" onclick="recorrerShortcut('J')">J</div>
+		<div class="letra" onclick="recorrerShortcut('K')">K</div>
+		<div class="letra" onclick="recorrerShortcut('L')">L</div>
+		<div class="letra" onclick="recorrerShortcut('M')">M</div>
+		<div class="letra" onclick="recorrerShortcut('N')">N</div>
+		<div class="letra" onclick="recorrerShortcut('O')">O</div>
+		<div class="letra" onclick="recorrerShortcut('P')">P</div>
+		<div class="letra" onclick="recorrerShortcut('Q')">Q</div>
+		<div class="letra" onclick="recorrerShortcut('R')">R</div>
+		<div class="letra" onclick="recorrerShortcut('S')">S</div>
+		<div class="letra" onclick="recorrerShortcut('T')">T</div>
+		<div class="letra" onclick="recorrerShortcut('U')">U</div>
+		<div class="letra" onclick="recorrerShortcut('V')">V</div>
+		<div class="letra" onclick="recorrerShortcut('W')">W</div>
+		<div class="letra" onclick="recorrerShortcut('X')">X</div>
+		<div class="letra" onclick="recorrerShortcut('Y')">Y</div>
+		<div class="letra" onclick="recorrerShortcut('Z')">Z</div>
+		<div class="letra" onclick="recorrerShortcut('#')">#</div>
+	</div>
+	<div class="botones">
+		<span class="btn_salir" onclick="inicio()">Salir</span>
 	</div>
 </div>
