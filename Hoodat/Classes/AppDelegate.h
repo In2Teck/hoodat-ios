@@ -29,8 +29,6 @@
 
 #import <Cordova/CDVViewController.h>
 
-#import "PushNotification.h"
-
 @interface AppDelegate : NSObject <UIApplicationDelegate>{}
 
 // invoke string is passed to your app on launch, this is only valid if you

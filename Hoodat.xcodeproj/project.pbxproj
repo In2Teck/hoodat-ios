@@ -7,8 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		0D012C7817BE3477004D77AA /* AppDelegate+Notification.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D012C7517BE3477004D77AA /* AppDelegate+Notification.m */; };
-		0D012C7917BE3477004D77AA /* PushNotification.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D012C7717BE3477004D77AA /* PushNotification.m */; };
 		0D047F0117B41E4C005A12D6 /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0D047F0017B41E4C005A12D6 /* Social.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		0D047F0317B41E53005A12D6 /* Accounts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0D047F0217B41E53005A12D6 /* Accounts.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		0D047F0517B41E58005A12D6 /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0D047F0417B41E58005A12D6 /* AdSupport.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
@@ -17,6 +15,8 @@
 		0D375D3A17C429DA00B85B90 /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0D375D3917C429DA00B85B90 /* FacebookSDK.framework */; };
 		0D375D3C17C42A3700B85B90 /* FacebookSDKResources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 0D375D3B17C42A3700B85B90 /* FacebookSDKResources.bundle */; };
 		0D5E1D3C17BE2F3500C58E3B /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D5E1D3B17BE2F3500C58E3B /* AppDelegate.m */; };
+		0D98DC4E17D01A700008E2E9 /* AppDelegate+notification.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D98DC4B17D01A700008E2E9 /* AppDelegate+notification.m */; };
+		0D98DC4F17D01A700008E2E9 /* PushPlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D98DC4D17D01A700008E2E9 /* PushPlugin.m */; };
 		1D60589B0D05DD56006BFB54 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; };
 		1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
 		1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
@@ -76,10 +76,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		0D012C7417BE3477004D77AA /* AppDelegate+Notification.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "AppDelegate+Notification.h"; sourceTree = "<group>"; };
-		0D012C7517BE3477004D77AA /* AppDelegate+Notification.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "AppDelegate+Notification.m"; sourceTree = "<group>"; };
-		0D012C7617BE3477004D77AA /* PushNotification.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PushNotification.h; sourceTree = "<group>"; };
-		0D012C7717BE3477004D77AA /* PushNotification.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PushNotification.m; sourceTree = "<group>"; };
 		0D047F0017B41E4C005A12D6 /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
 		0D047F0217B41E53005A12D6 /* Accounts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accounts.framework; path = System/Library/Frameworks/Accounts.framework; sourceTree = SDKROOT; };
 		0D047F0417B41E58005A12D6 /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = System/Library/Frameworks/AdSupport.framework; sourceTree = SDKROOT; };
@@ -131,6 +127,10 @@
 		0D375D6617C42A6000B85B90 /* NSError+FBError.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSError+FBError.h"; sourceTree = "<group>"; };
 		0D5E1D3A17BE2F3500C58E3B /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		0D5E1D3B17BE2F3500C58E3B /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		0D98DC4A17D01A700008E2E9 /* AppDelegate+notification.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "AppDelegate+notification.h"; sourceTree = "<group>"; };
+		0D98DC4B17D01A700008E2E9 /* AppDelegate+notification.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "AppDelegate+notification.m"; sourceTree = "<group>"; };
+		0D98DC4C17D01A700008E2E9 /* PushPlugin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PushPlugin.h; sourceTree = "<group>"; };
+		0D98DC4D17D01A700008E2E9 /* PushPlugin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PushPlugin.m; sourceTree = "<group>"; };
 		1D30AB110D05D00D00671497 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		1D6058910D05DD3D006BFB54 /* Hoodat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Hoodat.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1DF5F4DF0D08C38300B7A737 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
@@ -224,17 +224,6 @@
 			name = Classes;
 			path = Hoodat/Classes;
 			sourceTree = SOURCE_ROOT;
-		};
-		0D012C7317BE3477004D77AA /* PushNotification */ = {
-			isa = PBXGroup;
-			children = (
-				0D012C7417BE3477004D77AA /* AppDelegate+Notification.h */,
-				0D012C7517BE3477004D77AA /* AppDelegate+Notification.m */,
-				0D012C7617BE3477004D77AA /* PushNotification.h */,
-				0D012C7717BE3477004D77AA /* PushNotification.m */,
-			);
-			path = PushNotification;
-			sourceTree = "<group>";
 		};
 		0D047EFF17B41E06005A12D6 /* ios */ = {
 			isa = PBXGroup;
@@ -402,7 +391,10 @@
 		307C750510C5A3420062BCA9 /* Plugins */ = {
 			isa = PBXGroup;
 			children = (
-				0D012C7317BE3477004D77AA /* PushNotification */,
+				0D98DC4A17D01A700008E2E9 /* AppDelegate+notification.h */,
+				0D98DC4B17D01A700008E2E9 /* AppDelegate+notification.m */,
+				0D98DC4C17D01A700008E2E9 /* PushPlugin.h */,
+				0D98DC4D17D01A700008E2E9 /* PushPlugin.m */,
 				0D047EFF17B41E06005A12D6 /* ios */,
 			);
 			name = Plugins;
@@ -574,8 +566,8 @@
 				302D95F114D2391D003F00A1 /* MainViewController.m in Sources */,
 				0D047F0A17B41ED4005A12D6 /* FacebookConnectPlugin.m in Sources */,
 				0D5E1D3C17BE2F3500C58E3B /* AppDelegate.m in Sources */,
-				0D012C7817BE3477004D77AA /* AppDelegate+Notification.m in Sources */,
-				0D012C7917BE3477004D77AA /* PushNotification.m in Sources */,
+				0D98DC4E17D01A700008E2E9 /* AppDelegate+notification.m in Sources */,
+				0D98DC4F17D01A700008E2E9 /* PushPlugin.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

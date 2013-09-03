@@ -21,7 +21,6 @@ var app = {
     initialize: function() {
         this.bindEvents();
         this.register();
-        this.getBadges();
     },
     // Bind Event Listeners
     //
@@ -29,9 +28,13 @@ var app = {
     // 'load', 'deviceready', 'offline', and 'online'.
     bindEvents: function() {
     	document.addEventListener('resume', this.onResume, false);
-        document.addEventListener('push-notification', this.receiveEvent, false);
     },
-    receiveEvent: function(event) {
+    onResume: function() {
+        // handle push notifications outside the app
+    	app.clearBadgesAndRefresh();
+        inicio();
+    },
+    onNotificationAPN: function(event) {
         // handle push notifications inside the app
         app.clearBadgesAndRefresh();
     	if (paginaActual == templateDashboard) {
@@ -39,39 +42,23 @@ var app = {
             inicio();
     	}
     },
-    onResume: function() {
-        // handle push notifications outside the app
-    	app.clearBadgesAndRefresh();
-        inicio();
-    },
-    getBadges: function() {
-        pushNotification.getApplicationIconBadgeNumber(function(badgeNumber) {
-                                                       badgesNumber = badgeNumber;
-                                                       });
-    },
-    setBadges: function(num) {
-        pushNotification.setApplicationIconBadgeNumber(num);
-        badgesNumber = num;
-    },
-    receiveStatus: function() {
-        pushNotification.getRemoteNotificationStatus(function(status) {
-                                                     app.myLog.value+=JSON.stringify(['Registration check - getRemoteNotificationStatus', status])+"\n";
-                                                     });
-    },
-    getPending: function() {
-        pushNotification.getPendingNotifications(function(notifications) {
-                                                 //console.info("NOTIFICATIONS " + notifications.notifications.length);
-                                                 });
-    },
     register: function() {
-        pushNotification.registerDevice({alert:true, badge:true, sound:true}, function(status) {
-                                            app.storeToken(status.deviceToken);
-                                        });
+        pushNotification.register(function(status) {
+                                        app.storeToken(status.deviceToken);
+                                  },
+                                  function(status) {
+                                  },
+                                {"badge":"true","sound":"true","alert":"true","ecb":"app.onNotificationAPN"}
+                            );
     },
     registerWithFacebook: function() {
-        pushNotification.registerDevice({alert:true, badge:true, sound:true}, function(status) {
+        pushNotification.register(function(status) {
                                         app.linkDevice(status.deviceToken, getCache('usuario').facebook_id);
-                                        });
+                                  },
+                                  function(status) {
+                                  },
+                                {"badge":"true","sound":"true","alert":"true","ecb":"app.onNotificationAPN"}
+                                  );
     },
     sendNotification: function(game_id, message, sound, badge) {
         var xmlhttp=new XMLHttpRequest();
@@ -109,12 +96,11 @@ var app = {
     clearBadgesAndRefresh: function(){
         resetearBadges({ id : getCache('usuario').id },
                        function(response, textStatus, jqXHR) {
-                       app.setBadges(0);
-                       app.getPending();
                        },
                        function(jqXHR, textStatus, errorThrown) {
                        });
     },
+    /*
     // deviceready Event Handler
     //
     // The scope of 'this' is the event. In order to call the 'receivedEvent'
@@ -133,6 +119,7 @@ var app = {
 
         console.log('Received Event: ' + id);
     }
+     */
 };
 
 /** Variables para Javascript **/
