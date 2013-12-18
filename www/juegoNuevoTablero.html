@@ -102,7 +102,7 @@
     	
     	var xml = '<?xml version="1.0"?>';
     	xml += '<partida jugador1="' + jugador1 + '" jugador2="' + jugador2 + '">';
-    	xml += '<tablero >';
+    	xml += '<tablero tipo="' + TIPO_CARTA_PERSONAJE  + ' ">';
     	$('#cuadro_negro .carta').each(
     		function() {
     			xml += '<carta posicion="' + $(this).attr('posicion') + '" id="' + $(this).attr('id') + '" ruta="' + encodeURIComponent($(this).find('img.thumb').attr('src')) + '" nombre="' + $(this).find('span.nombre').html() + '">';
