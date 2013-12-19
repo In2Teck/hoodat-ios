@@ -43,8 +43,9 @@ var app = {
     	}
     },
     register: function() {
+        
         pushNotification.register(function(status) {
-                                        app.storeToken(status.deviceToken);
+                                        app.storeToken(status);
                                   },
                                   function(status) {
                                   },
