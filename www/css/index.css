@@ -537,6 +537,18 @@ body:after {
 	margin-bottom: 1.5%;
 }
 
+.partida .nuevo {
+	position: absolute;
+	
+	height: 100%;
+	
+	left: 1.5%;
+	right: 1.5%;
+	
+	background: transparent url('../img/db_estado_nuevo.png') no-repeat top left;
+    background-size: contain;
+}
+
 .partida .jugador {
 	position: absolute;
 	
@@ -605,15 +617,6 @@ body:after {
 	width: 30%;
 	
 	z-index: 20;
-}
-
-.partida .nuevo {
-	background: transparent url('../img/db_estado_nuevo.png') no-repeat top left;
-    background-size: contain;
-    
-    -moz-text-shadow:    0.1em 0.1em 0.1em #009D44;
-	-webkit-text-shadow: 0.1em 0.1em 0.1em #009D44;
-	text-shadow:         0.1em 0.1em 0.1em #009D44;
 }
 
 .partida .tu_turno {
