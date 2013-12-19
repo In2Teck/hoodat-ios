@@ -54,7 +54,7 @@ var app = {
     },
     registerWithFacebook: function() {
         pushNotification.register(function(status) {
-                                        app.linkDevice(status.deviceToken, getCache('usuario').facebook_id);
+                                        app.linkDevice(status, getCache('usuario').facebook_id);
                                   },
                                   function(status) {
                                   },
