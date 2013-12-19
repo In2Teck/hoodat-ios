@@ -137,8 +137,8 @@ var sistemaOperativo = "iOS"; //iOS
 // var sistemaOperativo = "Android"; //Android
 var agente = navigator.userAgent;
 
-var TIPO_CARTA_FAMOSO = 1;
-var TIPO_CARTA_PERSONAJE = 2;
+var TIPO_CARTA_PERSONAJE = 1;
+var TIPO_CARTA_FAMOSO = 2;
 var TIPO_CARTA_AMIGO = 3;
 
 var ESTATUS_NUEVO = 'NUEVO';

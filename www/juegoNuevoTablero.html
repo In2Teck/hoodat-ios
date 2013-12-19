@@ -27,7 +27,7 @@
     	
         // Arreglo que contiene las 20 cartas que conformarán el tablero
         var tablero = new Array();
-        cartas = getCache('personajes');        
+        cartas = getCache('personajes');
         cartas.sort( function() { return 0.5 - Math.random() } );
         for (var i=0; i <20; i++) {
             tablero.push(cartas[i]);
